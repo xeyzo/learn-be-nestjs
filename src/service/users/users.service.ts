@@ -49,7 +49,7 @@ export class UsersService {
     };
 
     async hashPassword(password: string): Promise<string> {
-        const salt: number= parseInt(this.configService.get('BCRYPT_SALT_ROUNDS'))
+        const salt: number = parseInt(this.configService.get('BCRYPT_SALT_ROUNDS'))
 
         const genSalt = await bcrypt.genSalt(salt)
         const hash = bcrypt.hash(password, genSalt)
