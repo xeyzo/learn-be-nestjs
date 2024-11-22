@@ -18,4 +18,7 @@ export class UserEntity {
 
     @Column()
     phonenumber: string
+
+    @Column()
+    address: string
 }
