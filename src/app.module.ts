@@ -6,7 +6,6 @@ import { ServiceModule } from './service/service.module';
   imports: [
     ServiceModule,
     DatabaseModule
-  ],
-  
+  ]
 })
 export class AppModule {}
