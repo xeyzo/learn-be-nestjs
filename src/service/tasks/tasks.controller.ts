@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Search, UseGuards} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards} from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './tasks-dto/create-task.dto';
 import { UpdateTaskDto } from './tasks-dto/update-task.dto';
@@ -14,26 +14,28 @@ export class TasksController {
     constructor(private tasksService:TasksService){};
 
     @Get()
-    @UseGuards(AuthGuard)
     getAllTasks(@Query() searchTaskDto: SearchTaskDto): Promise<TaskEntity[]>{
         return this.tasksService.get(searchTaskDto)
     };
 
     @Get('/:id')
-    getTaskById(@Param('id') id: string): Promise<TaskEntity | any> {
+    getTaskById(@Param('id') id: string): Promise<string> {
         return this.tasksService.find(id)
     }
 
+    @UseGuards(AuthGuard)
     @Post()
     createTask(@Body() createTaskDto: CreateTaskDto): Promise<TaskEntity> {
            return this.tasksService.create(createTaskDto);
     };
 
-    @Patch('/:id')
+    @UseGuards(AuthGuard)
+    @Put('/:id')
     updateTask(@Param('id') id: string,@Body() updateTaskDto: UpdateTaskDto): Promise<TaskEntity>{
         return this.tasksService.update(id, updateTaskDto)
     };
 
+    @UseGuards(AuthGuard)
     @Delete('/:id')
     deleteTask(@Param('id') id:string): Promise<boolean>{
         return this.tasksService.delete(id)

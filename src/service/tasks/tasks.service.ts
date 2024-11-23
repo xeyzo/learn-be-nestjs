@@ -64,6 +64,8 @@ export class TasksService {
             where: {id}
         })
 
+        console.log(found)
+
         if(!found){
             throw new NotFoundException('Task not found')
         }
@@ -88,6 +90,8 @@ export class TasksService {
 
         const found = await this.taskRepository.findOne({where: {id}})
 
+        console.log(found)
+
         if (!found) {
             throw new NotFoundException(`${id} not found`)
         }
@@ -96,7 +100,6 @@ export class TasksService {
         const task = this.taskRepository.create({
             id,
             title,
-            description: found.description,
             status
         })
 
