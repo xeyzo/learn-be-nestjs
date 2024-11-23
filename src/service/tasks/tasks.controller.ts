@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Search} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Search, UseGuards} from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './tasks-dto/create-task.dto';
 import { UpdateTaskDto } from './tasks-dto/update-task.dto';
 import { SearchTaskDto } from './tasks-dto/search-task.dto';
 import { TaskEntity } from './task.entity';
+import { AuthGuard } from '../auth/auth.guard';
 
 
 // provide http request
@@ -13,6 +14,7 @@ export class TasksController {
     constructor(private tasksService:TasksService){};
 
     @Get()
+    @UseGuards(AuthGuard)
     getAllTasks(@Query() searchTaskDto: SearchTaskDto): Promise<TaskEntity[]>{
         return this.tasksService.get(searchTaskDto)
     };

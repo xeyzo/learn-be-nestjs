@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { UserEntity } from './users.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -59,8 +59,20 @@ export class UsersService {
     async comparePassword(inputPassword:string, internalPassword: string):Promise<boolean>{     
         const data = await bcrypt.compare(inputPassword,internalPassword)
 
+        if (!data) {
+            throw new BadRequestException('Password tidak valid')     
+        }
+
         return data
     };
 
+    async getUserByEmail(email: string): Promise<UserEntity>{
+        const found = await this.userRepository.findOneBy({email})
+
+        if (!found) {
+            throw new NotFoundException(`User with emai : ${email} is not exist, please signup before login`)
+        }
+        return found
+    }
     
 }
