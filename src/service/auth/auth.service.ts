@@ -20,7 +20,8 @@ export class AuthService {
 
         const jwtPayload : object = {
             id: found.id,
-            email: found.email
+            email: found.email,
+            role: found.role
         }
 
         const token = jwt.sign(jwtPayload, this.configService.get<string>('SECRET_KEY'), {

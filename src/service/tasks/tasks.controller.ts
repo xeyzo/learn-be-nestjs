@@ -7,12 +7,15 @@ import { TaskEntity } from './task.entity';
 import { AuthGuard } from '../auth/auth.guard';
 
 
+
+
 // provide http request
 
 @Controller('tasks')
 export class TasksController {
     constructor(private tasksService:TasksService){};
 
+    @UseGuards(AuthGuard)
     @Get()
     getAllTasks(@Query() searchTaskDto: SearchTaskDto): Promise<TaskEntity[]>{
         return this.tasksService.get(searchTaskDto)

@@ -1,7 +1,13 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { TaskStatus } from "./task-status.enum";
 
 // provide modeling data to database
+
+export enum TaskStatus {
+    Open = 'Open',
+    InProgres = 'In Progres',
+    Done = 'Done'
+};
+
 
 @Entity()
 export class TaskEntity {

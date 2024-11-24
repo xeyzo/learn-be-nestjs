@@ -16,7 +16,7 @@ export class UsersService {
     ){}
 
     async create(payload: CreateUserDto):Promise<UserEntity>{
-        const { username, email, password, phonenumber, address } = payload;
+        const { username, email, password, phonenumber, address, role } = payload;
 
         const findEmail = await this.userRepository.findOne({
             where: {email}
@@ -40,7 +40,8 @@ export class UsersService {
             username,
             password:hash,
             phonenumber,
-            address
+            address,
+            role
         })
 
         await this.userRepository.save(users)

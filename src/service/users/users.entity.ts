@@ -1,6 +1,10 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 // provide modeling data to database
+export enum Roles {
+    admin = 'admin',
+    staff = 'staff'
+}
 
 @Entity()
 export class UserEntity {
@@ -21,4 +25,11 @@ export class UserEntity {
 
     @Column()
     address: string
+
+    @Column({
+        type: 'enum',
+        enum: Roles,
+        default: Roles.staff,
+    })
+    role:Roles
 }
