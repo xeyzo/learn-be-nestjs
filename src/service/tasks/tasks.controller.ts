@@ -5,6 +5,8 @@ import { UpdateTaskDto } from './tasks-dto/update-task.dto';
 import { SearchTaskDto } from './tasks-dto/search-task.dto';
 import { TaskEntity } from './task.entity';
 import { AuthGuard } from '../auth/auth.guard';
+import { RolesGuard } from '../auth/roles.guard';
+import { Roles } from '../auth/auth.decorator';
 
 
 
@@ -15,7 +17,8 @@ import { AuthGuard } from '../auth/auth.guard';
 export class TasksController {
     constructor(private tasksService:TasksService){};
 
-    @UseGuards(AuthGuard)
+    @UseGuards(AuthGuard, RolesGuard)
+    @Roles('staff')
     @Get()
     getAllTasks(@Query() searchTaskDto: SearchTaskDto): Promise<TaskEntity[]>{
         return this.tasksService.get(searchTaskDto)

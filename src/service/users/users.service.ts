@@ -57,16 +57,6 @@ export class UsersService {
         return hash
     }
 
-    async comparePassword(inputPassword:string, internalPassword: string):Promise<boolean>{     
-        const data = await bcrypt.compare(inputPassword,internalPassword)
-
-        if (!data) {
-            throw new BadRequestException('Password tidak valid')     
-        }
-
-        return data
-    };
-
     async getUserByEmail(email: string): Promise<UserEntity>{
         const found = await this.userRepository.findOneBy({email})
 

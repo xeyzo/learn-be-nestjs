@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
     const token = authHeader.split(' ')[1];
 
     try {
-      const decoded = this.authService.validateToken(token);
+      const decoded = this.authService.decode(token);
       request.user = decoded;
     } catch (err) {
       throw new UnauthorizedException('Invalid or expired token');
