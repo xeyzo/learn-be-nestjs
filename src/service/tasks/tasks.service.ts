@@ -100,18 +100,12 @@ export class TasksService {
         const task = this.taskRepository.create({
             id,
             title,
-            status
+            status,
+            description: found.description
         })
 
         await this.taskRepository.update(id, task)
         
-        return {
-            before:{
-                found
-            },
-            after:{
-                task
-            }
-        }
+        return found
     }
 };
