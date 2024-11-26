@@ -1,7 +1,6 @@
 import { Test } from "@nestjs/testing";
 import { TasksService } from "./tasks.service"
-import { TaskEntity, TaskStatus } from "./task.entity";
-import { CreateTaskDto } from "./tasks-dto/create-task.dto";
+import { TaskStatus } from "./task.entity";
 
 
 const mockTasks = () => ({
