@@ -6,7 +6,7 @@ import { SearchTaskDto } from './tasks-dto/search-task.dto';
 import { TaskEntity } from './task.entity';
 import { AuthGuard } from '../auth/auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
-import { Roles } from '../auth/auth.decorator';
+import { Roles } from '../auth/role.decorator';
 
 
 

@@ -4,7 +4,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './users-dto/create-user.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
-import { Roles } from '../auth/auth.decorator';
+import { Roles } from '../auth/role.decorator';
 
 @Controller('users')
 export class UsersController {
