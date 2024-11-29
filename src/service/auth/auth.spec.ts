@@ -4,7 +4,8 @@ import { LoginDto } from "./auth-dto/login-dto";
 
 const mockAuth = () => ({
     login: jest.fn(),
-    encode: jest.fn()
+    encode: jest.fn(),
+    decode: jest.fn()
 })
 
 describe('Auth test', ()=>{
@@ -48,11 +49,19 @@ describe('Auth test', ()=>{
                 role: 'Admin' 
             }
 
-            const result = await authService.encode(payload)
-            console.log(result) 
+            const result = await authService.encode(payload) 
 
             jest.spyOn(authService, 'encode').mockImplementation(()=> Promise.resolve(payload))
             expect(result).not.toEqual('')
         })
-    })
+    });
+
+    describe('decode token',()=>{
+        it('checking return decode token', ()=>{
+            const token : string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIzOGM4YzEwLTYxNDEtNDViYS04OTQzLWRkNGFmZTVlODU0MSIsImVtYWlsIjoic3RhZmZAbWFpbC5jb20iLCJyb2xlIjoic3RhZmYiLCJpYXQiOjE3MzI4ODc5MDMsImV4cCI6MTczMjg5MTUwM30.ej-xjZ0CzAXz6gICcrXd1nvtCtnJWaJy7NNPVuPasr4'
+
+            jest.spyOn(authService, 'decode').mockImplementation(()=> Promise.resolve(token))
+            expect(token).not.toEqual('')
+        })
+    });
 })
