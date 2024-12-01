@@ -11,6 +11,7 @@ async function bootstrap() {
   .setTitle('My API')
   .setDescription('API documentation for my project')
   .setVersion('1.0')
+  .addBearerAuth()
   .build();
 
   const document = SwaggerModule.createDocument(app, config); 

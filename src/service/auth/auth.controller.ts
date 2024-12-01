@@ -10,7 +10,7 @@ export class AuthController {
         private readonly authService: AuthService
     ){}
 
-    @Post()
+    @Post('/login')
     @ApiQuery({type: LoginDto}) 
     @ApiResponse({ status: 200, description: 'Login succes' })
     createUser(@Body() loginDto: LoginDto): Promise<object> {
