@@ -33,7 +33,7 @@ export class TasksController {
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Endpoint that requires credentials' })
     @ApiResponse({ status: 200, description: 'find data succes' })
-    @ApiResponse({ status: 400, description: 'data task is empty' })
+    @ApiResponse({ status: 401, description: 'data task is empty' })
     getTaskById(@Param('id') id: string): Promise<string> {
         return this.tasksService.find(id)
     }
@@ -46,7 +46,7 @@ export class TasksController {
     @ApiOperation({ summary: 'Endpoint that requires credentials' })
     @ApiQuery({type: CreateTaskDto}) 
     @ApiResponse({ status: 200, description: 'your task succesfully created' })
-    @ApiResponse({ status: 400, description: 'bad request' })
+    @ApiResponse({ status: 500, description: 'bad request' })
     createTask(@Body() createTaskDto: CreateTaskDto): Promise<TaskEntity> {
            return this.tasksService.create(createTaskDto);
     };
@@ -58,7 +58,7 @@ export class TasksController {
     @ApiOperation({ summary: 'Endpoint that requires credentials' })
     @ApiQuery({type: UpdateTaskDto})
     @ApiResponse({ status: 200, description: 'your task succesfully updated' })
-    @ApiResponse({ status: 400, description: 'bad request' }) 
+    @ApiResponse({ status: 401, description: 'bad request' }) 
     updateTask(@Param('id') id: string,@Body() updateTaskDto: UpdateTaskDto): Promise<TaskEntity>{
         return this.tasksService.update(id, updateTaskDto)
     };
