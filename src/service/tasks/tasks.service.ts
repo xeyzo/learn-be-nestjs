@@ -21,11 +21,11 @@ export class TasksService {
     async get(Query: SearchTaskDto): Promise<TaskEntity[]> {
         const data = this.taskRepository.createQueryBuilder('task_entity');
         
-        if (Query.status) {
+        if (Query.status || '') {
             data.andWhere('task_entity.status = :status', { status: Query.status });
         }
 
-        if (Query.title) {
+        if (Query.title || '') {
             data.andWhere('LOWER(task_entity.title) LIKE :title', { title: `%${Query.title.toLowerCase()}%` });
         }
 

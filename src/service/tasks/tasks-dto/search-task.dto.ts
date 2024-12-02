@@ -1,10 +1,13 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { TaskStatus } from "../task.entity";
+import { IsOptional } from "class-validator";
 
 export class SearchTaskDto{
-    @ApiProperty({ description: 'title', example: 'belajar membaca' })
+    @IsOptional()
+    @ApiProperty({ description: 'title', example: 'belajar membaca', required:false })
     title: string
 
-    @ApiProperty({ description: 'status', example: 'Open' })
+    @IsOptional()
+    @ApiProperty({ description: 'status', example: 'Open', required:false })
     status: TaskStatus
 }

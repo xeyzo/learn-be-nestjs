@@ -13,6 +13,7 @@ export class AuthController {
     @Post('/login')
     @ApiQuery({type: LoginDto}) 
     @ApiResponse({ status: 200, description: 'Login succes' })
+    @ApiResponse({ status: 400, description: 'User cannot registered' })
     createUser(@Body() loginDto: LoginDto): Promise<object> {
            return this.authService.login(loginDto);
     };
