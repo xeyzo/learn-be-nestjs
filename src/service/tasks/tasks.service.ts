@@ -40,8 +40,8 @@ export class TasksService {
         return tasks
     };
 
-    async create(payload: CreateTaskDto): Promise<TaskEntity>{
-        const { title, description, status, UserId} = payload
+    async create(payload: CreateTaskDto, userId: string): Promise<TaskEntity>{
+        const { title, description, status} = payload
 
         const found = await this.taskRepository.findOneBy({title})
 
@@ -49,7 +49,7 @@ export class TasksService {
             throw new BadRequestException(`Task ${title} is exist`)
         }
 
-        const findUser = await this.userService.findUserById(UserId)
+        const findUser = await this.userService.findUserById(userId)
 
         const task = this.taskRepository.create({
             title,
@@ -67,8 +67,6 @@ export class TasksService {
         const found =  await this.taskRepository.findOne({
             where: {id}
         })
-
-        console.log(found)
 
         if(!found){
             throw new NotFoundException('Task not found')
@@ -94,7 +92,6 @@ export class TasksService {
 
         const found = await this.taskRepository.findOne({where: {id}})
 
-        console.log(found)
 
         if (!found) {
             throw new NotFoundException(`${id} not found`)

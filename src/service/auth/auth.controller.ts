@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './auth-dto/login-dto';
 import { ApiQuery, ApiResponse } from '@nestjs/swagger';
@@ -14,7 +14,7 @@ export class AuthController {
     @ApiQuery({type: LoginDto}) 
     @ApiResponse({ status: 200, description: 'Login succes' })
     @ApiResponse({ status: 400, description: 'User cannot registered' })
-    createUser(@Body() loginDto: LoginDto): Promise<object> {
-           return this.authService.login(loginDto);
+    async createUser(@Body() loginDto: LoginDto): Promise<any> {
+        return this.authService.login(loginDto);
     };
 }

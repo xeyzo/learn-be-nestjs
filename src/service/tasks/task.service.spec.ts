@@ -58,6 +58,7 @@ describe('',()=>{
         it('should create a task successfully', async () => {
           const title = 'New Task';
           const description = 'Task Description';
+          const userId = 'qoeqwejamsd1123aa'
           const mockTask = {
             id:'1',
             title,
@@ -86,9 +87,9 @@ describe('',()=>{
     
           jest.spyOn(taskService, 'create').mockResolvedValue(mockTask);
     
-          const result = await taskService.create(mockTaskDTO);
+          const result = await taskService.create(mockTaskDTO, userId);
     
-          expect(taskService.create).toHaveBeenCalledWith(mockTaskDTO);
+          expect(taskService.create).toHaveBeenCalledWith(mockTaskDTO, userId);
           expect(result).toEqual(mockTask);
         });
       });

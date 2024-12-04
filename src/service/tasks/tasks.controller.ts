@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards} from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './tasks-dto/create-task.dto';
 import { UpdateTaskDto } from './tasks-dto/update-task.dto';
@@ -6,7 +6,7 @@ import { SearchTaskDto } from './tasks-dto/search-task.dto';
 import { TaskEntity } from './task.entity';
 import { AuthGuard } from '../auth/auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
-import { Roles } from '../auth/role.decorator';
+import { Roles, CurrentUser } from '../auth/auth.decorator';
 import { ApiQuery, ApiResponse, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
 // provide http request
@@ -47,8 +47,12 @@ export class TasksController {
     @ApiQuery({type: CreateTaskDto}) 
     @ApiResponse({ status: 200, description: 'your task succesfully created' })
     @ApiResponse({ status: 500, description: 'bad request' })
-    createTask(@Body() createTaskDto: CreateTaskDto): Promise<TaskEntity> {
-           return this.tasksService.create(createTaskDto);
+    createTask(
+        @Body() createTaskDto: CreateTaskDto,
+        @CurrentUser() user: any
+    ): Promise<TaskEntity> {
+        console.log(user)
+        return this.tasksService.create(createTaskDto, '1');
     };
 
     @UseGuards(AuthGuard, RolesGuard)
