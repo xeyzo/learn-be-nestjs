@@ -66,6 +66,7 @@ export class TasksController {
     @UseGuards(AuthGuard, RolesGuard)
     @Roles('staff')
     @Delete('/:id')
+    @ApiBearerAuth()
     @ApiResponse({ status: 200, description: 'delete data succesfully' })
     @ApiResponse({ status: 401, description: 'the data is not foundd' })
     deleteTask(@Param('id') id:string): Promise<boolean>{
