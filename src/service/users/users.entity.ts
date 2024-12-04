@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { TaskEntity } from "../tasks/task.entity";
 
 // provide modeling data to database
 export enum Roles {
@@ -32,4 +33,7 @@ export class UserEntity {
         default: Roles.staff,
     })
     role:Roles
+
+    @OneToMany(() => TaskEntity, (task) => task.user)
+    tasks: TaskEntity[];
 }

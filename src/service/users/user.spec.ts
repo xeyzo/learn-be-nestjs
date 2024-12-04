@@ -35,7 +35,8 @@ describe('',()=>{
             email: 'example@mail.com',
             phonenumber: '089652553045',
             address:'jl kenanga no.13 rt.09 rw.02',
-            role:Roles.staff
+            role:Roles.staff,
+            tasks:[]
           };
 
           jest.spyOn(userService, 'create').mockResolvedValue(Promise.resolve(mockUser))

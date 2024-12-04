@@ -49,6 +49,15 @@ export class UsersService {
         return users 
     };
 
+
+    async findUserById(id: string): Promise<UserEntity> {
+        const result = await this.userRepository.findOneBy({
+            id
+        })
+
+        return result
+    }
+
     async hashPassword(password: string): Promise<string> {
         const salt: number = parseInt(this.configService.get('BCRYPT_SALT_ROUNDS'))
 

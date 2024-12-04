@@ -1,6 +1,7 @@
 import { Test } from "@nestjs/testing";
 import { TasksService } from "./tasks.service"
-import { TaskStatus } from "./task.entity";
+import { TaskEntity, TaskStatus } from "./task.entity";
+import { Roles } from "../users/users.entity";
 
 
 const mockTasks = () => ({
@@ -28,24 +29,6 @@ describe('',()=>{
     describe('getTasks', ()=>{
         it('call all data in task table',async ()=>{
             taskService.get(null)
-
-            const data = [
-                {
-                    id:"1239oqowek91239i",
-                    title: "belajar membuat sayur lodeh",
-                    description: "belajar nganu",
-                    status: TaskStatus.Done 
-                },
-                {
-                    id:"1239oqowek91239s",
-                    title: "belajar membuat sayur kangkung",
-                    description: "belajar nganu",
-                    status: TaskStatus.Done
-                }
-            ]
-
-
-            jest.spyOn(taskService, 'get').mockImplementation(() =>Promise.resolve(data));
             expect(taskService.get).toHaveBeenCalled();
             expect(taskService.get).toHaveBeenCalledWith(null);
         })
@@ -79,14 +62,33 @@ describe('',()=>{
             id:'1',
             title,
             description,
-            status: TaskStatus.Open
+            status: TaskStatus.Open,
+            UserId:'',
+            user: {
+                id :'1',
+                username:'maman suratman',
+                password:'maman gaming',
+                email:'example@mail.com',
+                phonenumber:'0882391234121',
+                address:'jl puspita',
+                role:Roles.staff,
+                tasks:[]
+            }
+          };
+
+          const mockTaskDTO = {
+            id:'1',
+            title,
+            description,
+            status: TaskStatus.Open,
+            userId:''
           };
     
-          jest.spyOn(taskService, 'create').mockResolvedValue(Promise.resolve(mockTask));
+          jest.spyOn(taskService, 'create').mockResolvedValue(mockTask);
     
-          const result = await taskService.create(mockTask);
+          const result = await taskService.create(mockTaskDTO);
     
-          expect(taskService.create).toHaveBeenCalledWith(mockTask);
+          expect(taskService.create).toHaveBeenCalledWith(mockTaskDTO);
           expect(result).toEqual(mockTask);
         });
       });

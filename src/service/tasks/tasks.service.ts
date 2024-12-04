@@ -6,6 +6,7 @@ import { TaskEntity } from './task.entity';
 import { Repository } from 'typeorm';
 import { UpdateTaskDto } from './tasks-dto/update-task.dto';
 import { SearchTaskDto } from './tasks-dto/search-task.dto';
+import { UsersService } from '../users/users.service';
 
 
 // provide bussines procees
@@ -15,17 +16,18 @@ export class TasksService {
 
     constructor(
         @InjectRepository(TaskEntity)
-        private readonly taskRepository: Repository<TaskEntity>
+        private readonly taskRepository: Repository<TaskEntity>,
+        private readonly userService: UsersService
     ){}
 
     async get(Query: SearchTaskDto): Promise<TaskEntity[]> {
         const data = this.taskRepository.createQueryBuilder('task_entity');
         
-        if (Query.status || '') {
+        if (Query.status) {
             data.andWhere('task_entity.status = :status', { status: Query.status });
         }
 
-        if (Query.title || '') {
+        if (Query.title) {
             data.andWhere('LOWER(task_entity.title) LIKE :title', { title: `%${Query.title.toLowerCase()}%` });
         }
 
@@ -39,7 +41,7 @@ export class TasksService {
     };
 
     async create(payload: CreateTaskDto): Promise<TaskEntity>{
-        const { title, description, status } = payload
+        const { title, description, status, UserId} = payload
 
         const found = await this.taskRepository.findOneBy({title})
 
@@ -47,11 +49,13 @@ export class TasksService {
             throw new BadRequestException(`Task ${title} is exist`)
         }
 
-        
+        const findUser = await this.userService.findUserById(UserId)
+
         const task = this.taskRepository.create({
             title,
             description,
             status: TaskStatus.Open || status,
+            user : findUser           
         })
         
         await this.taskRepository.save(task)

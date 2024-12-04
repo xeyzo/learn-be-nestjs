@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { UserEntity } from "../users/users.entity";
 
 // provide modeling data to database
 
@@ -27,4 +28,7 @@ export class TaskEntity {
         default: TaskStatus.Open,
     })
     status: TaskStatus
+
+    @ManyToOne(() => UserEntity, (user) => user.tasks, { onDelete: 'CASCADE' })
+    user: UserEntity;
 }
