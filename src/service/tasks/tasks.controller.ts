@@ -6,7 +6,7 @@ import { SearchTaskDto } from './tasks-dto/search-task.dto';
 import { TaskEntity } from './task.entity';
 import { AuthGuard } from '../auth/auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
-import { Roles, CurrentUser } from '../auth/auth.decorator';
+import { Roles } from '../auth/auth.decorator';
 import { ApiQuery, ApiResponse, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
 // provide http request
@@ -49,10 +49,8 @@ export class TasksController {
     @ApiResponse({ status: 500, description: 'bad request' })
     createTask(
         @Body() createTaskDto: CreateTaskDto,
-        @CurrentUser() user: any
     ): Promise<TaskEntity> {
-        console.log(user)
-        return this.tasksService.create(createTaskDto, '1');
+        return this.tasksService.create(createTaskDto);
     };
 
     @UseGuards(AuthGuard, RolesGuard)

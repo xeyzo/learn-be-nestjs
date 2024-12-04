@@ -40,8 +40,8 @@ export class TasksService {
         return tasks
     };
 
-    async create(payload: CreateTaskDto, userId: string): Promise<TaskEntity>{
-        const { title, description, status} = payload
+    async create(payload: CreateTaskDto): Promise<TaskEntity>{
+        const { title, description, status, userId} = payload
 
         const found = await this.taskRepository.findOneBy({title})
 
@@ -49,13 +49,13 @@ export class TasksService {
             throw new BadRequestException(`Task ${title} is exist`)
         }
 
-        const findUser = await this.userService.findUserById(userId)
+        const findUser = await this.taskRepository.findOneBy({id:userId})
 
         const task = this.taskRepository.create({
             title,
             description,
             status: TaskStatus.Open || status,
-            user : findUser           
+            user : findUser          
         })
         
         await this.taskRepository.save(task)

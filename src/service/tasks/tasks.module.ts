@@ -6,6 +6,8 @@ import { TaskEntity } from './task.entity';
 import { AuthModule } from '../auth/auth.module';
 import { UserEntity } from '../users/users.entity';
 import { UsersService } from '../users/users.service';
+import { AuthGuard } from '../auth/auth.guard';
+import { RolesGuard } from '../auth/roles.guard';
 
 @Module({
   imports : [
