@@ -40,16 +40,14 @@ export class TasksService {
         return tasks
     };
 
-    async create(payload: CreateTaskDto): Promise<TaskEntity>{
-        const { title, description, status, userId} = payload
+    async create(payload: CreateTaskDto, id: string): Promise<TaskEntity| any>{
+        const { title, description, status} = payload
+        const findTask = await this.taskRepository.findOneBy({title})
+        const findUser = await this.userService.findUserById(id)
 
-        const found = await this.taskRepository.findOneBy({title})
-
-        if (found) {
+        if (findTask) {
             throw new BadRequestException(`Task ${title} is exist`)
         }
-
-        const findUser = await this.taskRepository.findOneBy({id:userId})
 
         const task = this.taskRepository.create({
             title,

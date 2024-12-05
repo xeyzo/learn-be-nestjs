@@ -6,8 +6,8 @@ import { SearchTaskDto } from './tasks-dto/search-task.dto';
 import { TaskEntity } from './task.entity';
 import { AuthGuard } from '../auth/auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
-import { Roles } from '../auth/auth.decorator';
-import { ApiQuery, ApiResponse, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import { User, Roles } from '../auth/auth.decorator';
+import { ApiQuery, ApiResponse, ApiBearerAuth, ApiOperation, ApiBody } from '@nestjs/swagger';
 
 // provide http request
 
@@ -44,13 +44,14 @@ export class TasksController {
     @Post()
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Endpoint that requires credentials' })
-    @ApiQuery({type: CreateTaskDto}) 
+    @ApiBody({type: CreateTaskDto}) 
     @ApiResponse({ status: 200, description: 'your task succesfully created' })
     @ApiResponse({ status: 500, description: 'bad request' })
     createTask(
         @Body() createTaskDto: CreateTaskDto,
-    ): Promise<TaskEntity> {
-        return this.tasksService.create(createTaskDto);
+        @User() user: any
+    ): Promise<TaskEntity| any> {
+        return this.tasksService.create(createTaskDto, user.id);
     };
 
     @UseGuards(AuthGuard, RolesGuard)

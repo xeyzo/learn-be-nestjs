@@ -16,8 +16,4 @@ export class CreateTaskDto{
     @IsOptional()
     @IsEnum(TaskStatus)
     status: TaskStatus
-
-    @ApiProperty({ description: 'user id', example: '12312blabla1234' })
-    @IsNotEmpty()
-    userId: string
 }

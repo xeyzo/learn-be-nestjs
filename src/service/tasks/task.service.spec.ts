@@ -87,7 +87,7 @@ describe('',()=>{
     
           jest.spyOn(taskService, 'create').mockResolvedValue(mockTask);
     
-          const result = await taskService.create(mockTaskDTO);
+          const result = await taskService.create(mockTaskDTO, userId);
     
           expect(taskService.create).toHaveBeenCalledWith(mockTaskDTO, userId);
           expect(result).toEqual(mockTask);
